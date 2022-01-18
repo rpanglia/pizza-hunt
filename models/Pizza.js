@@ -72,10 +72,6 @@ const commentCount = new Schema (
 );
 
 
-CommentSchema.virtual('replyCount').get(function() {
-  return this.replies.length;
-});
-
 
 // export the Pizza model
 module.exports = Pizza;
