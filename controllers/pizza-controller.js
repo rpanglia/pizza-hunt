@@ -4,6 +4,12 @@ const pizzaController = {
     // get all pizzas -- THIS SERVES AS THE CALLBACK FUNCTION FOR THE GET / api/pizzas route (uses mongoose .find() method)!
     getAllPizza(req, res) {
       Pizza.find({})
+        .populate({
+          path: 'comments',
+          select: '-__v'
+        })
+        .select('-__v')
+        .sort({ _id: -1 })
         .then(dbPizzaData => res.json(dbPizzaData))
         .catch(err => {
           console.log(err);
