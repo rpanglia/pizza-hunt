@@ -1,13 +1,22 @@
 const router = require('express').Router();
-const { addComment, removeComment } = require('../../controllers/comment-controller');
+const {
+    addComment,
+    removeComment,
+    addReply,
+    removeReply
+  } = require('../../controllers/comment-controller');
 
 //api/comments/:pizzaId ---use addComment() as POST callback
-// /api/comments/<pizzaId>
 router.route('/:pizzaId').post(addComment);
 
 
 //api/comments/:pizzaId/:commentId -- use removeComment() as DELETE callback
-// /api/comments/<pizzaId>/<commentId>
-router.route('/:pizzaId/:commentId').delete(removeComment);
+router
+.route('/:pizzaId/:commentId')
+.put(addReply)
+.delete(removeComment);
+
+//need new route for delete (for removeReply) since we need the id of the individual reply, not just its parent
+router.route('/:pizzaId/:commentId/:replyId').delete(removeReply);
 
 module.exports = router;
